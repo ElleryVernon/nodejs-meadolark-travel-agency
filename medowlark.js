@@ -1,13 +1,7 @@
 const express = require("express")
 const expressHandlebars = require("express-handlebars")
+const fortune = require("./lib/fourtune")
 const app = express()
-const fortunes = [
-  "Conquer your fears or thy will conquer you.",
-  "Rivers need springs.",
-  "Do net fear what you don't know.",
-  "You wil have a plleasant surprise.",
-  "Whenever possible, keep it simple.",
-]
 // 핸들바 뷰 설정
 app.engine(
   "handlebars",
@@ -24,13 +18,11 @@ app.use(express.static(__dirname + "/public"))
 app.get("/", (req, res) => res.render("home"))
 
 app.get("/about", (req, res) => {
-  const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)]
-  res.render("about", { fortune: randomFortune })
+  res.render("about", { fortune: fortune.getFortune() })
 })
 
 // custom 404 page
 app.use((req, res) => {
-  res.type("text/plain")
   res.status(404)
   res.render("404")
 })
@@ -38,7 +30,6 @@ app.use((req, res) => {
 // custom 500 page.
 app.use((err, req, res, next) => {
   console.error(err.message)
-  res.type("text/plain")
   res.status(500)
   res.render("500")
 })
