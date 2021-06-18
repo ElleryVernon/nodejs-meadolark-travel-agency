@@ -1,2 +1,2 @@
 # nodejs-meadolark-travel-agency
-web development with Node &amp; Express
+web development with Node &amp; Express 
